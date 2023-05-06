@@ -1,0 +1,46 @@
+@import '../variables';
+
+.categories {
+  ul {
+    display: flex;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+
+    li {
+      display: flex;
+      align-items: center;
+      justify-content: center ;
+      background-color: #f9f9f9;
+      padding: 13px 30px;
+      border-radius: 30px;
+      margin-right: 10px;
+      font-weight: 500;
+      cursor: pointer;
+      transition: background-color 0.1s ease-in-out;
+      @include noselect();
+
+      &:hover {
+        background-color: darken(#f9f9f9, 2%);
+      }
+
+      &:active {
+        background-color: darken(#f9f9f9, 5%);
+      }
+
+      &.active {
+        background-color: #282828;
+        color: #fff;
+        transition: all 0.4s ease;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width:1300px){
+  .categories{
+    ul{
+      flex-direction: column;
+    }
+  }
+}
