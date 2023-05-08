@@ -4,9 +4,13 @@ import Skeleton from 'react-loading-skeleton'
 import 'react-loading-skeleton/dist/skeleton.css'
 import { Link } from 'react-router-dom'
 import SearchInput from '../searchInput/SearchInput'
+import { context } from '../../App'
 
 
-function Header({loading,inputValue, setInputValue}) {
+function Header() {
+
+  const { inputValue, setInputValue , loading}  = React.useContext(context)
+
   return (
     <div className="header">
     <div className="container">

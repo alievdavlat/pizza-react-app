@@ -1,16 +1,16 @@
 import React, { useState } from "react";
 import { Categories, Pagination, PizzaBlock, PizzaBlockLoader, Sort } from "../components";
+import { context } from "../App";
 
 
 
-function Home({loading,setLoading,inputValue}) {
+function Home() {
   const [items , setItems ] = React.useState([])
   const [pizzaLoading, setPizzaLoading] = useState(true)
   const [listValue, setListValue] = React.useState('')
   const [categoryIndex , setCategoryIndex] = React.useState(0)
   const [currentPage, setCurrentPage] = React.useState(1)
-
-console.log(currentPage);
+  const { inputValue, setInputValue , loading, setLoading}  =  React.useContext(context)
 
 
   React.useEffect(() => {

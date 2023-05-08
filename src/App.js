@@ -4,17 +4,20 @@ import { Route, Routes } from "react-router-dom";
 import { Cart, Header, Home, NotFound } from "./components";
 
 
+ export const context = React.createContext()
+
 
 function App() {
 const [ loading , setLoading ] = React.useState(true)
 const [inputValue, setInputValue] = React.useState('')
 
   return (
+    <context.Provider value={{inputValue, setInputValue, loading, setLoading}}>
       <div className="wrapper">
-        <Header  loading={loading} inputValue={inputValue} setInputValue={setInputValue} />
+        <Header    />
         <div className="content">
             <Routes>
-              <Route path="/" exact  element={<Home loading={loading}  setLoading={setLoading} inputValue={inputValue} setInputValue={setInputValue} />} />
+              <Route path="/" exact  element={<Home />} />
               <Route path="/cart" element={<Cart/>} />
               <Route path="*" element={<NotFound/>} />
             </Routes>
@@ -23,6 +26,7 @@ const [inputValue, setInputValue] = React.useState('')
           <a href="https://github.com/alievdavlat" target="_blank">Made by Aliev Davlat : https://github.com/alievdavlat </a>
         </h4>
       </div>
+      </context.Provider>
   );
 }
 
