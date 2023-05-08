@@ -1,0 +1,32 @@
+.pagination{
+}
+.pagination li{
+  display: inline-block;
+  width: 45px;
+  line-height: 42px;
+  height: 45px;
+  margin-right: 10px;
+  text-align: center;
+  border: 1px solid #fe5f11;
+  border-radius: 30px;
+  cursor: pointer;
+  transition: all 0.3s ease-in-out;
+}
+.pagination li:hover a{
+  color: #fff;
+
+} 
+.pagination li.selected{
+  display: inline-block;
+  color: #fe5f11;
+
+}
+.pagination li:hover{
+  background-color:#fe5f11;
+}
+.pagination li a{
+  display: inline-block;
+  color: #fe5f11;
+  width: 45px;
+  height: 45px;
+}

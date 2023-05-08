@@ -1,26 +1,49 @@
-import React from 'react'
+import React from "react";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
-function Categories() {
-  const [categoryIndex , setCategoryIndex] = React.useState(0)
-  const categories = ["Все", "Мясные", "Вегетарианская", "Гриль", "Острые", "Закрытые"]
+function Categories({ loading, categoryIndex, setCategoryIndex }) {
+  const categories = [
+    "Все",
+    "Мясные",
+    "Вегетарианская",
+    "Гриль",
+    "Острые",
+    "Закрытые",
+  ];
 
   return (
     <div className="categories">
-
-    <ul>
-      {
-        categories.map((item, idx ) => {
-          return(
-            <li  onClick={() => setCategoryIndex(idx)} className={categoryIndex === idx ? 'active' : ''} key={item}>{item}</li>
-          )
-        })
-      }
-    </ul>
-    <h2 className="content__title">{categories[categoryIndex]} пиццы</h2>
-
-  </div>
-
-  )
+      <ul>
+        {categories.map((item, idx) => {
+          return loading ? (
+            <Skeleton
+              key={idx}
+              width={150}
+              height={50}
+              style={{ margin: "0px 10px 0px 0px", borderRadius: "20px" }}
+            />
+          ) : (
+            <li
+              onClick={() => setCategoryIndex(idx)}
+              className={categoryIndex === idx ? "active" : ""}
+              key={item}>
+              {item}
+            </li>
+          );
+        })}
+      </ul>
+      {loading ? (
+        <Skeleton
+          width={150}
+          height={40}
+          style={{ marginTop: "20px", marginBottom: "20px" }}
+        />
+      ) : (
+        <h2 className="content__title">{categories[categoryIndex]} пиццы</h2>
+      )}
+    </div>
+  );
 }
 
-export default Categories
+export default Categories;

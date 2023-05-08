@@ -6,6 +6,30 @@
     width: 100%;
     padding: 0;
     margin: 0;
+    @media (max-width:1000px) {
+      display: flex;
+      flex-direction: column;
+      width: 400px;
+      
+    }
+    @media (max-width:700px) {
+      display: flex;
+      flex-direction: column;
+      width: 300px;
+      align-items: start;
+      justify-content: start;
+      
+    }
+    @media (max-width:400px) {
+      display: flex;
+      flex-direction: column;
+      width: 250px;
+      align-items: start;
+      justify-content: start;
+      
+    }
+
+
 
     li {
       display: flex;
@@ -19,6 +43,14 @@
       cursor: pointer;
       transition: background-color 0.1s ease-in-out;
       @include noselect();
+
+      @media (max-width:1200px){
+        width: 100%;
+        align-items: start;
+        justify-content: start ;
+        margin-bottom: 15px;
+  
+      }
 
       &:hover {
         background-color: darken(#f9f9f9, 2%);
@@ -37,10 +69,3 @@
   }
 }
 
-@media only screen and (max-width:1300px){
-  .categories{
-    ul{
-      flex-direction: column;
-    }
-  }
-}

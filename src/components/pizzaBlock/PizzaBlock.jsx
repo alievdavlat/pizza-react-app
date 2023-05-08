@@ -8,6 +8,7 @@ function PizzaBlock({item}) {
 
 
   return (
+    <div className='pizza-block__wrapper'>
     <div className="pizza-block">
     <img className="pizza-block__image" src={item.imageUrl} alt="Pizza" />
     <h4 className="pizza-block__title">{item.name}</h4>
@@ -35,6 +36,7 @@ function PizzaBlock({item}) {
       </button>
     </div>
   </div>
+    </div>
 
   )
 }

@@ -6,10 +6,11 @@
   margin-bottom: 65px;
   padding: 10px 0px;
 
-  &:not(:nth-of-type(4n)) {
-    margin-right: 35px;
-  }
-
+    &__wrapper{
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
   &__image {
     width: 260px;
   }

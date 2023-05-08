@@ -1,40 +1,28 @@
-import { Categories, Header, Sort } from "./components";
-import PizzaBlock from "./components/pizzaBlock/PizzaBlock";
 import React from "react";
 import "./scss/app.scss";
+import { Route, Routes } from "react-router-dom";
+import { Cart, Header, Home, NotFound } from "./components";
 
 
 
 function App() {
-const [items , setItems ] = React.useState([])
-
-React.useEffect(() => {
-  fetch('https://6456abe42e41ccf16922b42e.mockapi.io/items')
-    .then(res => res.json())
-    .then(data => setItems(data))
-}, [])
+const [ loading , setLoading ] = React.useState(true)
+const [inputValue, setInputValue] = React.useState('')
 
   return (
-    <div className="App">
       <div className="wrapper">
-        <Header />
+        <Header  loading={loading} inputValue={inputValue} setInputValue={setInputValue} />
         <div className="content">
-          <div className="container">
-            <div className="content__top">
-              <Categories />
-              <Sort />
-            </div>
-
-            <div className="content__items">
-              
-             {
-              items?.map((item,idx) =>  <PizzaBlock item={item} key={item.id} />)
-             }
-            </div>
-          </div>
+            <Routes>
+              <Route path="/" exact  element={<Home loading={loading}  setLoading={setLoading} inputValue={inputValue} setInputValue={setInputValue} />} />
+              <Route path="/cart" element={<Cart/>} />
+              <Route path="*" element={<NotFound/>} />
+            </Routes>
         </div>
+        <h4 style={{margin:'0 auto' , width:'100%', textAlign:'center',padding:'15px'}}>
+          <a href="https://github.com/alievdavlat" target="_blank">Made by Aliev Davlat : https://github.com/alievdavlat </a>
+        </h4>
       </div>
-    </div>
   );
 }
 

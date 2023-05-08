@@ -1,0 +1,16 @@
+.NotFoundBlock{
+  width: 800px;
+  text-align: center;
+  margin: 0 auto;
+  margin-top: 50px;
+}
+.NotFoundBlock h1{
+  font-size: 62px;
+  color: #787878;
+}
+.NotFoundBlock p{
+  font-size: 24px;
+  color: #474444;
+  font-weight: 500;
+
+}
