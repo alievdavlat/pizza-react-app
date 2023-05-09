@@ -1,29 +1,31 @@
 import React from "react";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import { useDispatch, useSelector } from "react-redux";
+import { setListActive, setListValue } from "../../redux/slices/filterSlice";
 
-function Sort({ loading, listValue, setListValue }) {
-  const [listActive, setListActive] = React.useState(0)
+function Sort({ loading }) {
+  const dispatch = useDispatch()
+  const {listActive, list, openSort} = useSelector(state => state.filter)
   const [open, setOpen] = React.useState(false);
-  const list = [
-    { name: "популярности", sortProperty: "rating" },
-    { name: "цене", sortProperty: "price" },
-    { name: "алфавиту", sortProperty: "title" },
-  ];
-  const sortTitle = list[listActive].name;
 
   const handleActiveList = (sortProperty, idx) => {
-    setListValue(sortProperty);
-    setListActive(idx)
+    dispatch(setListValue(sortProperty));
+    dispatch(setListActive(idx))
     setOpen(false);
   };
+
+
+  React.useEffect(() => {
+    document.body.addEventListener('click', (e) => {if(e.target.tagName !== 'SPAN') setOpen(false)})
+  }, [])
 
   return (
     <>
       {loading ? (
         <Skeleton width={200} height={50} />
       ) : (
-        <div className="sort">
+        <div  className="sort" >
           <div className="sort__label">
             <svg
               width="10"
@@ -36,7 +38,7 @@ function Sort({ loading, listValue, setListValue }) {
                 fill="#2C2C2C"></path>
             </svg>
             <b>Сортировка по:</b>
-            <span onClick={() => setOpen(!open)}>{sortTitle}</span>
+            <span className="sort-modalName" onClick={() => setOpen(!open)}>{list[listActive].name}</span>
           </div>
           {open && (
             <div className="sort__popup">

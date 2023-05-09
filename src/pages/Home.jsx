@@ -1,33 +1,60 @@
-import React, { useState } from "react";
+import React from "react";
 import { Categories, Pagination, PizzaBlock, PizzaBlockLoader, Sort } from "../components";
 import { context } from "../App";
-
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import qs from 'qs'
+import {  useNavigate } from "react-router-dom";
+import { setItems, setPizzaLoading } from "../redux/slices/pizzasSlice";
 
 
 function Home() {
-  const [items , setItems ] = React.useState([])
-  const [pizzaLoading, setPizzaLoading] = useState(true)
-  const [listValue, setListValue] = React.useState('')
-  const [categoryIndex , setCategoryIndex] = React.useState(0)
+  const { items, pizzaLoading  } = useSelector(state => state.pizza) 
+  const {categoryIndex,listValue} = useSelector(state => state.filter)
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
   const [currentPage, setCurrentPage] = React.useState(1)
   const { inputValue, setInputValue , loading, setLoading}  =  React.useContext(context)
 
 
-  React.useEffect(() => {
-    setPizzaLoading(true)
 
-    fetch(`https://6456abe42e41ccf16922b42e.mockapi.io/items?page=${currentPage}&limit=4&${categoryIndex > 0 ? `category=${categoryIndex}`: ''}&sortBy=${listValue}&order=desc`)
-      .then(res => res.json())
-      .then(data => {
-        setItems(data)
-        setTimeout(() => {
-          setLoading(false)
-          setPizzaLoading(false)
-        }, 1000);
-      })
+
+  const getData = async () => {
+      try {
+        const {data} = await axios.get(`https://6456abe42e41ccf16922b42e.mockapi.io/items?page=${currentPage}&limit=4&${categoryIndex > 0 ? `category=${categoryIndex}`: ''}&sortBy=${listValue}&order=desc`)
+        dispatch(setItems(data))
+        // dispatch(fetchPizzas(
+        //   { 
+        //    currentPage,
+        //    categoryIndex,
+        //    listValue,
+        //  }
+        //  ),)
+        
+      } catch (error) {
+        setPizzaLoading(false)        
+      } finally{
+        setLoading(false)
+        dispatch(setPizzaLoading(false))
+      }
+  }
+
+  React.useEffect(() => {
+    dispatch(setPizzaLoading(true))
+     getData()
       window.scrollTo(0, 0)
   }, [listValue,categoryIndex,currentPage])
   
+
+  React.useEffect(() => {
+    const queryString = qs.stringify({
+      sortProperty:listValue,
+      categoryIndex,
+    })
+    navigate(`?${queryString}`)
+  },[listValue,categoryIndex,currentPage])
+
+
   const skileton = [...new Array(10)].map((item, idx) => (  <PizzaBlockLoader key={idx} /> ))
 
   const pizzasBlock = items.filter(obj => obj.name.toLowerCase().includes(inputValue.toLowerCase())) .map((item, idx) => <PizzaBlock item={item} key={item.id} />)
@@ -36,8 +63,8 @@ function Home() {
   return (
     <div className="container">
       <div className="content__top">
-        <Categories loading={loading} categoryIndex={categoryIndex} setCategoryIndex={setCategoryIndex} />
-        <Sort loading={loading}  listValue={listValue} setListValue={setListValue} />
+        <Categories loading={loading}   />
+        <Sort loading={loading} />
       </div>
       <div className="content__items">
         {  pizzaLoading ? skileton : pizzasBlock }
